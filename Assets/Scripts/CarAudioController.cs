@@ -49,6 +49,7 @@ namespace MertStudio.Car.Sounds
             highAcceleration = setup.highAcceleration;
             limiter = setup.limiter;
         }
+
         public void UpdateEngineSetup()
         {
             getSetup(); //to prevent bugs when updating engine audio from other scripts
@@ -58,6 +59,12 @@ namespace MertStudio.Car.Sounds
             highAccel.clip = highAcceleration.audio;
             limit.clip = limiter.audio;
             idleSource.clip = idle.audio;
+
+            lowAccel.Play();
+            medAccel.Play();
+            highAccel.Play();
+            limit.Play();
+            idleSource.Play();
         }
 
         void Update()
