@@ -4,3 +4,5 @@
 copy scripts folder and 2JZ folder for example engine
 
 add Car Audio controller to your car and manage it from your car controller
+
+Unity Version: 2022.3.3f1 LTS
