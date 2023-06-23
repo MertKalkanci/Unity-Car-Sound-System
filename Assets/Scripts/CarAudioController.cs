@@ -11,6 +11,7 @@ namespace MertStudio.Car.Sounds
     }
     public class CarAudioController : MonoBehaviour
     {
+        public bool sparkWhileAccelleration;
         [Range(0f, 1f)] public float rpm,sparkRate;
         public EngineAudipSetup setup;
         private CarAudio idle, lowAcceleration, mediumAcceleration, highAcceleration, limiter,spark1A,spark2A,spark3A;
@@ -48,11 +49,14 @@ namespace MertStudio.Car.Sounds
         }
         private void getSetup()
         {
+            sparkRate = setup.sparkRate;
+
             idle = setup.idle;
             lowAcceleration = setup.lowAcceleration;
             mediumAcceleration = setup.mediumAcceleration;
             highAcceleration = setup.highAcceleration;
             limiter = setup.limiter;
+            
             spark1A = setup.spark1;
             spark2A = setup.spark2;
             spark3A = setup.spark3;
@@ -85,22 +89,15 @@ namespace MertStudio.Car.Sounds
             rpm = rpm > 1 ? 1 : rpm;
             rpm = rpm < 0 ? 0 : rpm;
 
-            if(oldRpm - rpm > (1 - sparkRate))
+            if (sparkWhileAccelleration)
             {
-                switch ((int)UnityEngine.Random.Range(1, 3))
+                if (Mathf.Abs(oldRpm - rpm) > (1 - sparkRate))
                 {
-                    case 1:
-                        spark1.Play();
-                        break;
-                    case 2:
-                        spark2.Play();
-                        break;
-                    case 3:
-                        spark3.Play();
-                        break;
-                    default:
-                        spark3.Play();
-                        break;
+                    spark();
+                }
+                else if (oldRpm - rpm > (1 - sparkRate))
+                {
+                    spark();
                 }
             }
 
@@ -121,6 +118,24 @@ namespace MertStudio.Car.Sounds
             idleSource.pitch = idle.volumeCurve.Evaluate(rpm);
 
             oldRpm = rpm;
+        }
+        private void spark()
+        {
+            switch ((int)UnityEngine.Random.Range(1, 3))
+            {
+                case 1:
+                    spark1.Play();
+                    break;
+                case 2:
+                    spark2.Play();
+                    break;
+                case 3:
+                    spark3.Play();
+                    break;
+                default:
+                    spark3.Play();
+                    break;
+            }
         }
     }
 }
