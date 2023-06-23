@@ -89,16 +89,13 @@ namespace MertStudio.Car.Sounds
             rpm = rpm > 1 ? 1 : rpm;
             rpm = rpm < 0 ? 0 : rpm;
 
-            if (sparkWhileAccelleration)
+            if (Mathf.Abs(oldRpm - rpm) > (1 - sparkRate) && sparkWhileAccelleration)
             {
-                if (Mathf.Abs(oldRpm - rpm) > (1 - sparkRate))
-                {
-                    spark();
-                }
-                else if (oldRpm - rpm > (1 - sparkRate))
-                {
-                    spark();
-                }
+                spark();
+            }
+            else if (oldRpm - rpm > (1 - sparkRate) && !sparkWhileAccelleration)
+            {
+                spark();
             }
 
             lowAccel.volume = lowAcceleration.volumeCurve.Evaluate(rpm);
