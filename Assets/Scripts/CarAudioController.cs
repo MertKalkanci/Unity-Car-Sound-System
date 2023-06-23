@@ -114,6 +114,11 @@ namespace MertStudio.Car.Sounds
             idleSource.volume = idle.volumeCurve.Evaluate(rpm);
             idleSource.pitch = idle.volumeCurve.Evaluate(rpm);
 
+            spark1.volume = spark1A.volumeCurve.Evaluate(rpm);
+            spark2.volume = spark2A.volumeCurve.Evaluate(rpm);
+            spark3.volume = spark3A.volumeCurve.Evaluate(rpm);
+
+
             oldRpm = rpm;
         }
         private void spark()
