@@ -11,10 +11,11 @@ namespace MertStudio.Car.Sounds
     }
     public class CarAudioController : MonoBehaviour
     {
-        [Range(0f, 1f)] public float rpm;
+        [Range(0f, 1f)] public float rpm,sparkRate;
         public EngineAudipSetup setup;
-        private CarAudio idle, lowAcceleration, mediumAcceleration, highAcceleration, limiter;
-        private AudioSource idleSource,lowAccel, medAccel, highAccel, limit;
+        private CarAudio idle, lowAcceleration, mediumAcceleration, highAcceleration, limiter,spark1A,spark2A,spark3A;
+        private AudioSource idleSource,lowAccel, medAccel, highAccel, limit,spark1,spark2,spark3;
+        private float oldRpm = 0;
         void Awake()
         {
             getSetup();
@@ -25,6 +26,10 @@ namespace MertStudio.Car.Sounds
             highAccel = gameObject.AddComponent<AudioSource>();
             limit = gameObject.AddComponent<AudioSource>();
             idleSource = gameObject.AddComponent<AudioSource>();
+            spark1 = gameObject.AddComponent<AudioSource>();
+            spark2 = gameObject.AddComponent<AudioSource>();
+            spark3 = gameObject.AddComponent<AudioSource>();
+
 
             lowAccel.loop = true;
             medAccel.loop = true;
@@ -48,11 +53,18 @@ namespace MertStudio.Car.Sounds
             mediumAcceleration = setup.mediumAcceleration;
             highAcceleration = setup.highAcceleration;
             limiter = setup.limiter;
+            spark1A = setup.spark1;
+            spark2A = setup.spark2;
+            spark3A = setup.spark3;
         }
 
         public void UpdateEngineSetup()
         {
             getSetup(); //to prevent bugs when updating engine audio from other scripts
+
+            spark1.clip = spark1A.audio;
+            spark2.clip = spark2A.audio;
+            spark3.clip = spark3A.audio;
 
             lowAccel.clip = lowAcceleration.audio;
             medAccel.clip = mediumAcceleration.audio;
@@ -69,8 +81,28 @@ namespace MertStudio.Car.Sounds
 
         void Update()
         {
+
             rpm = rpm > 1 ? 1 : rpm;
             rpm = rpm < 0 ? 0 : rpm;
+
+            if(oldRpm - rpm > (1 - sparkRate))
+            {
+                switch ((int)UnityEngine.Random.Range(1, 3))
+                {
+                    case 1:
+                        spark1.Play();
+                        break;
+                    case 2:
+                        spark2.Play();
+                        break;
+                    case 3:
+                        spark3.Play();
+                        break;
+                    default:
+                        spark3.Play();
+                        break;
+                }
+            }
 
             lowAccel.volume = lowAcceleration.volumeCurve.Evaluate(rpm);
             lowAccel.pitch = lowAcceleration.volumeCurve.Evaluate(rpm);
@@ -87,6 +119,8 @@ namespace MertStudio.Car.Sounds
 
             idleSource.volume = idle.volumeCurve.Evaluate(rpm);
             idleSource.pitch = idle.volumeCurve.Evaluate(rpm);
+
+            oldRpm = rpm;
         }
     }
 }
