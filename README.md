@@ -9,7 +9,7 @@ If you find this useful, please give it a star to show your support for this pro
 ## [Example Usage Video](https://www.youtube.com/watch?v=L4Mc18lOeT4&t=79s)
 
 ## Clone the code
-copy scripts folder and 2JZ folder for example engine
+copy scripts folder and Engines folder for example engine
 
 add Car Audio controller to your car and manage it from your car controller
 
