@@ -13,4 +13,4 @@ copy scripts folder and Engines folder for example engine
 
 add Car Audio controller to your car and manage it from your car controller
 
-Unity Version: 2022.3.3f1 LTS
+Unity Version: 2022.3.28f1 LTS but probably compatible with Unity 2017 and later releases
