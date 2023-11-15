@@ -249,7 +249,7 @@ MonoBehaviour:
   sparkWhileAccelleration: 1
   rpm: 0.169
   sparkRate: 0
-  setup: {fileID: 11400000, guid: 7e8ee850a5bbb4f42bbd455108deaa17, type: 2}
+  setup: {fileID: 11400000, guid: 311d04da03f758846bad3f40803a0b34, type: 2}
 --- !u!4 &728479213
 Transform:
   m_ObjectHideFlags: 0
